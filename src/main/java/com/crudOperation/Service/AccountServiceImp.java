@@ -18,18 +18,24 @@ public class AccountServiceImp implements AccountService {
 
     @Autowired
     AccountRepository repo;
-
+   
     //insert data
     @Override
-    public Account save(Account account) {
+    public boolean isAccountAdd(Account account) {
+        boolean b=repo.existsById(account.getAcc_id());
         try{
-           String s= account.toString();
-           System.out.println(s);
-            return repo.save(account);
+            if(b){
+                return false;
+            }else{
+               
+                repo.save(account);
+                return true;
+            }
+          
         }catch(Exception ex){
            
-            log.info("error is in service"+ex);;
-            return null;
+            log.error("error is in service"+ex);;
+            return false;
         }
     }
 
@@ -37,12 +43,12 @@ public class AccountServiceImp implements AccountService {
     //view all account
     @Override
     public List<Account> getAllAccounts() {
-       try{
+       try{ 
             return repo.findAll();
 
        }catch(Exception ex){
 
-            log.info("error in get all info"+ex);
+            log.error("error in get all info"+ex);
             return null;
        }
     
@@ -61,7 +67,7 @@ public class AccountServiceImp implements AccountService {
                 return null;
             }
         }catch(Exception ex){
-            log.info("trubble in get account"+ex);
+            log.error("trubble in get account"+ex);
             return null;
         }
     }
@@ -79,7 +85,7 @@ public class AccountServiceImp implements AccountService {
             return false;
         }
        }catch(Exception ex){
-            log.info("account not deleted"+ex);
+            log.error("account not deleted"+ex);
             return false;
        }
     }
@@ -97,7 +103,8 @@ public class AccountServiceImp implements AccountService {
                 return false;
             }
         }catch(Exception ex){
-            log.info("not updated"+ex);
+            log.error("not updated"+ex);
+            System.out.println("hello");
             return false;
         }
     }
@@ -109,7 +116,7 @@ public class AccountServiceImp implements AccountService {
         if(account.isPresent()){
             Account acc=account.get();
             if(acc.isDeleted()){
-                return "this account is already deketed";
+                return "this account is already deleted";
             }
             acc.setDeleted(true);
             repo.save(acc);

@@ -9,7 +9,7 @@ import com.crudOperation.Entity.Account;
 public interface AccountService {
 
     //create account
-    public Account save(Account account);
+    public boolean isAccountAdd(Account account);
 
     //get all acount list
     public List<Account> getAllAccounts();

@@ -16,23 +16,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
-
-
 @RestController
 @RequestMapping("/Account")
 public class AccountController {
-
+  
     @Autowired
-    AccountService service;
-
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-  public void createAccount(@RequestBody Account account){
-        service.save(account);
+    private AccountService service;
+   
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+  public String createAccount(@RequestBody Account account){
+        boolean b=service.isAccountAdd(account);
+        return b?"account saved":"not saved";
   }
 
   @GetMapping("/getdata")
   public List<Account> getAllInfo(){
    return service.getAllAccounts();
+
   }
 
   @GetMapping("/getbyid/{acc_id}")

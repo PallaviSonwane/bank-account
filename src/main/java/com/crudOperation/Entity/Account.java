@@ -2,21 +2,29 @@ package com.crudOperation.Entity;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+
+import org.springframework.stereotype.Component;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@Component
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="account")
 public class Account {
 
     @Id
     @GeneratedValue
-    private UUID acc_id;
+    private UUID acc_id;  
 
     @Column(name="acc_no")
     private int acc_no;
@@ -36,13 +44,17 @@ public class Account {
     @Column(name="deleted")
     private boolean deleted;
 
-    @Override
-    public String toString() {
-        return "Account [acc_id=" + acc_id + ", acc_no=" + acc_no + ", transition_value=" + transition_value
-                + ", transition_type=" + transition_type + ", acc_type=" + acc_type + ", time=" + time + ", deleted="
-                + deleted + "]";
+
+
+    public int getAcc_no() {
+        return acc_no;
     }
 
- 
+    public void setAcc_no(int acc_no) {
+        this.acc_no = acc_no;
+    }
+
+    
+
   
 }
